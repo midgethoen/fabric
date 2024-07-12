@@ -1,14 +1,15 @@
+import argparse
+import json
+import os
 import re
+import sys
+from datetime import datetime
+
+import isodate
+from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from youtube_transcript_api import YouTubeTranscriptApi
-from dotenv import load_dotenv
-from datetime import datetime
-import os
-import json
-import isodate
-import argparse
-import sys
 
 
 def get_video_id(url):
@@ -92,6 +93,7 @@ def main_function(url, options):
         metadata['title'] = video_response['items'][0]['snippet']['title']
         metadata['channel'] = video_response['items'][0]['snippet']['channelTitle']
         metadata['published_at'] = video_response['items'][0]['snippet']['publishedAt']
+        metadata['description'] = video_response['items'][0]['snippet']['description']
 
         # Get video transcript
         try:
